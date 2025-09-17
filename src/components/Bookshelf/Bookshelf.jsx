@@ -11,7 +11,7 @@ const Bookshelf = () => {
         {title: "Slavery by Another Name", author: "Douglas A. Blackmon", pages: 279, read: false}
     ])
 
-    const [formData, setFormData] = useState({
+    const [newBook, setNewBook] = useState({
         title: "",
         author: "",
         read: false
@@ -21,28 +21,33 @@ const Bookshelf = () => {
     const handleInputChange = (e) => {
         console.log(e.target.name, e.target.value)
         // Logic for handling input changes will go here
-        setFormData({...formData, [e.target.name]: e.target.value})
+        setNewBook({
+            ...newBook,
+            [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+        })
     }
     
     const handleFormSubmit = (e) => {
-        console.log("form submitted", formData)
+        console.log("form submitted", newBook)
         e.preventDefault();
         // Logic for handling form submission will go here
-       setTitle(formData.title)
+       setTitle(newBook.title)
         // Clear the form inputs after submission
-        setFormData({title: "", author: "", read: false})
-      
+        setNewBook({title: "", author: "", read: false})
+        setBooks([...books, newBook])
     }
-
+    
 
     return(
         <>
-        <ul>{books.map(book => <li key={book.title}>
-            {book.title} 
-            by {book.author}
-            </li>)}
-        </ul>
-        <h1>{title}</h1>
+    <div className="bookCardsDiv">{books.map(book => (
+    <div className="bookCard" key={book.title}>
+      <h4>{book.title}</h4>
+      <p>by {book.author}</p>
+      <p>{book.pages} pages</p>
+      <p>{book.read ? "Read" : "Not Read"}</p>
+    </div>
+  ))}</div>
 
 <div className="bookshelfDiv">
 
@@ -55,7 +60,7 @@ const Bookshelf = () => {
             type="text" 
             id="title" 
             name="title" 
-            value={formData.title} 
+            value={newBook.title} 
             onChange={handleInputChange} 
             required 
         />
@@ -65,7 +70,7 @@ const Bookshelf = () => {
             type="text" 
             id="author" 
             name="author" 
-            value={formData.author} 
+            value={newBook.author} 
             onChange={handleInputChange} 
             required 
         />
@@ -75,7 +80,7 @@ const Bookshelf = () => {
             type="checkbox" 
             id="read" 
             name="read" 
-            checked={formData.read} 
+            checked={newBook.read} 
             onChange={handleInputChange} 
         />
         
@@ -87,7 +92,7 @@ const Bookshelf = () => {
     </form>
   </div>
 
-  <div className="bookCardsDiv">{/* Book cards will display here */}</div>
+
 
 </div>
 </>
