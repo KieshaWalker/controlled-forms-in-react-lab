@@ -11,10 +11,17 @@ const Bookshelf = () => {
         {title: "Slavery by Another Name", author: "Douglas A. Blackmon", pages: 279, read: false}
     ])
 
-    
+    const [formData, setFormData] = useState({
+        title: "",
+        author: "",
+        read: false
+    })
+        
+
     const handleInputChange = (e) => {
+        console.log(e.target.name, e.target.value)
         // Logic for handling input changes will go here
-        setBooks({...formData, [e.target.name]: e.target.value})
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
     
     const handleFormSubmit = (e) => {
@@ -25,7 +32,7 @@ const Bookshelf = () => {
         setBooks({
             title: "",
             author: "",
-            pages: "",
+            
             read: false
         })
     
@@ -39,10 +46,40 @@ const Bookshelf = () => {
 <div className="bookshelfDiv">
 
   <div className="formDiv">
-
-    <h3>Add a Book</h3>
+        <h3>Add a Book</h3>
 
     <form onSubmit={handleFormSubmit}>
+        <label htmlFor='title'>Title:</label>
+        <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            value={books.title} 
+            onChange={handleInputChange} 
+            required 
+        />
+        
+        <label htmlFor='author'>Author:</label>
+        <input 
+            type="text" 
+            id="author" 
+            name="author" 
+            value={books.author} 
+            onChange={handleInputChange} 
+            required 
+        />
+      
+        <label htmlFor='read'>Read:</label>
+        <input 
+            type="checkbox" 
+            id="read" 
+            name="read" 
+            checked={books.read} 
+            onChange={handleInputChange} 
+        />
+        
+        <button type="submit">Add Book</button>
+
 
     {/* Form will go here */}
 
