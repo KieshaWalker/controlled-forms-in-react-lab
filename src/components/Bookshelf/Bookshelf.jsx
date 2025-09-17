@@ -25,22 +25,23 @@ const Bookshelf = () => {
     }
     
     const handleFormSubmit = (e) => {
+        console.log("form submitted", formData)
         e.preventDefault();
         // Logic for handling form submission will go here
-        setTitle([...books, formData])
-
-        setBooks({
-            title: "",
-            author: "",
-            
-            read: false
-        })
-    
+       setTitle(formData.title)
+        // Clear the form inputs after submission
+        setFormData({title: "", author: "", read: false})
+      
     }
 
 
     return(
         <>
+        <ul>{books.map(book => <li key={book.title}>
+            {book.title} 
+            by {book.author}
+            </li>)}
+        </ul>
         <h1>{title}</h1>
 
 <div className="bookshelfDiv">
@@ -54,7 +55,7 @@ const Bookshelf = () => {
             type="text" 
             id="title" 
             name="title" 
-            value={books.title} 
+            value={formData.title} 
             onChange={handleInputChange} 
             required 
         />
@@ -64,7 +65,7 @@ const Bookshelf = () => {
             type="text" 
             id="author" 
             name="author" 
-            value={books.author} 
+            value={formData.author} 
             onChange={handleInputChange} 
             required 
         />
@@ -74,7 +75,7 @@ const Bookshelf = () => {
             type="checkbox" 
             id="read" 
             name="read" 
-            checked={books.read} 
+            checked={formData.read} 
             onChange={handleInputChange} 
         />
         
